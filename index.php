@@ -1,3 +1,12 @@
+<?php
+session_start();
+ini_set('display_errors','Off');
+if(!$_SESSION["autoriser"]){
+    $_SESSION["autoriser"]=null;
+}
+ini_set('display_errors','On');
+ ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -109,7 +118,16 @@
     <header>
         <h1>Todolist & Playlist</h1>
         <nav>
-            <a href="loging.php">Ma Todolist</a>
+<?php
+            if ($_SESSION["autoriser"] != "oui") {
+?>              <a href="loging.php">Ma Todolist</a>
+<?php       }
+            else{
+?>            <a href="session.php">Ma Todolist</a>
+<?php 
+            }
+?>
+           
             <a href="index.php"><img src="images/mosaique_sf2.png"></a>
             <a href="playlist.php">Ma playlist</a>
         </nav>
@@ -118,7 +136,16 @@
     
         <h2>Bienvenu(e)<br>sur<br>la Todolist</h2>
         <section id="principal">
-            <a href="register.php">Créez un compte</a>
+<?php
+            if ($_SESSION["autoriser"] != "oui") {
+?>              <a href="register.php">Créez un compte</a>
+<?php       }
+            else{
+?>            <a href="deconnexion.php">Se déconnecter</a>
+<?php 
+            }
+?>
+            
         </section>
     </main>
     <footer></footer>

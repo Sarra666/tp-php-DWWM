@@ -115,8 +115,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1>Todolist & Playlist</h1>
         <nav>
     
-            
-            <a href="loging.php">Ma Todolist</a>
+<?php
+            ini_set('display_errors','Off');
+            if ($_SESSION["autoriser"] != "oui") {
+?>              <a href="loging.php">Ma Todolist</a>
+<?php       
+            }
+            else{
+?>              <a href="session.php">Ma Todolist</a>
+<?php 
+            }
+            ini_set('display_errors','On');
+?>
             <a href="index.php"><img src="images/mosaique_sf2.png"></a>
             <a href="playlist.php">Ma playlist</a>
         </nav>

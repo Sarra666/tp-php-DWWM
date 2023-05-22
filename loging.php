@@ -23,16 +23,15 @@
   * Traitemet des données si la methode est bien POST
   */
  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-     $_POST = filter_input_array(INPUT_POST, [
-         'pseudo' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-         'passwd' => FILTER_SANITIZE_FULL_SPECIAL_CHARS
- 
-     ]);
-     /**
-      * Initialisation des variables qui vont recevoir les datas des champs de formulaire
-      */
-     $pseudo = $_POST['pseudo'] ?? '';
-     $passwd = $_POST['passwd'] ?? '';
+    $_POST = filter_input_array(INPUT_POST, [
+        'pseudo' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+        'passwd' => FILTER_SANITIZE_FULL_SPECIAL_CHARS
+    ]);
+    /**
+    * Initialisation des variables qui vont recevoir les datas des champs de formulaire
+    */
+    $pseudo = $_POST['pseudo'] ?? '';
+    $passwd = $_POST['passwd'] ?? '';
  
  
      /**
@@ -75,33 +74,35 @@
             exit();
             
         } else {
-            $message = "<span class='message'>Le login existe déja ! </span>";
-           // $errors['doublon'] =  MYSQLI_CODE_DUPLICATE_KEY ;
+            //$message = "<span class='message'>Le login existe déja ! </span>";
+            // $errors['doublon'] =  MYSQLI_CODE_DUPLICATE_KEY ;
            
-           /*$sql = 'SELECT * FROM users 
-           WHERE (pseudo = \''. $pseudo.'\' AND  '.password_verify( $passwd , "$2y$10\$dXGy8KvpHRyJkgEy0aKNwe179qRMQbyRytR2mhPhhvLxghGHgPhkK" ) .' = 1 );';*/
+            /*$sql = 'SELECT * FROM users 
+            WHERE (pseudo = \''. $pseudo.'\' AND  '.password_verify( $passwd , "$2y$10\$dXGy8KvpHRyJkgEy0aKNwe179qRMQbyRytR2mhPhhvLxghGHgPhkK" ) .' = 1 );';*/
            
           
-           //echo(password_verify($_POST['passwd'], '$2y$10$dXGy8KvpHRyJkgEy0aKNwe179qRMQbyRytR2mhPhhvLxghGHgPhkK)' ));
-           //$db_statement = $pdo->query($sql);
-         /*  $sql ="SELECT passwd FROM users WHERE id = 1 ;";
-           $db_statement = $pdo->query($sql);*/
-           $sql = 'SELECT * FROM users WHERE (pseudo = \''. $pseudo.'\')';
-           $db_statement = $pdo->query($sql);
-           session_start();
-           $_SESSION = $db_statement->fetch(PDO::FETCH_ASSOC); // crée un tableau associatif $row['id'] row['pseudo'] row['passwd']
-           $_SESSION["autoriser"] = "non";
+            //echo(password_verify($_POST['passwd'], '$2y$10$dXGy8KvpHRyJkgEy0aKNwe179qRMQbyRytR2mhPhhvLxghGHgPhkK)' ));
+            //$db_statement = $pdo->query($sql);
+            /*  $sql ="SELECT passwd FROM users WHERE id = 1 ;";
+            $db_statement = $pdo->query($sql);*/
+            
+            $sql = 'SELECT * FROM users WHERE (pseudo = \''. $pseudo.'\')';
+            $db_statement = $pdo->query($sql);
+            session_start();
+            $_SESSION = $db_statement->fetch(PDO::FETCH_ASSOC); // crée un tableau associatif $_SESSION['id'] $_SESSION['pseudo'] $_SESSION['passwd']
+            var_dump($_SESSION);
+            $_SESSION["autoriser"] = "non";
         
-           if( password_verify( $passwd , $_SESSION['passwd']) == 1)  {
+            if( password_verify( $passwd , $_SESSION['passwd']) == 1)  {
         
-            $_SESSION["autoriser"] = "oui";
+                $_SESSION["autoriser"] = "oui";
           
-            header('Location:session.php');
+                header('Location:session.php');
         
-           }
-           else{
-            echo('pseudo ou mot de passe incorrect !');
-           }
+            }
+            else{
+                echo('pseudo ou mot de passe incorrect !');
+            }
           /* $sql = 'SELECT passwd FROM users WHERE '.password_verify( $passwd , "$2y$10\$dXGy8KvpHRyJkgEy0aKNwe179qRMQbyRytR2mhPhhvLxghGHgPhkK" ) .' = 1 );';/* ?>
             <tr>
             <td><?php echo htmlspecialchars($id); ?></td>
@@ -131,7 +132,10 @@
             <?php endwhile; */
         
             
+           
         }
+        
+    
     } else {
         
         $message = "<span class='message'>Veuillez renseigner tous les champs! </span>";
@@ -199,8 +203,18 @@ $erreur = "";
         <h1>Todolist & Playlist</h1>
         <nav>
     
-            
-            <a href="loging.php">Ma Todolist</a>
+<?php
+            ini_set('display_errors','Off');
+            if ($_SESSION["autoriser"] != "oui") {
+?>              <a href="loging.php">Ma Todolist</a>
+<?php       
+            }
+            else{
+?>              <a href="session.php">Ma Todolist</a>
+<?php 
+            }
+            ini_set('display_errors','On');
+?>
             <a href="index.php"><img src="images/mosaique_sf2.png"></a>
             <a href="playlist.php">Ma playlist</a>
         </nav>
