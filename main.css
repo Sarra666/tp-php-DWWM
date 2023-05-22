@@ -1,0 +1,56 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+#accueil{
+    background-image: url(images/balloons-g157f090d6_1920.jpg);
+    color:white;
+}
+#playlist{
+
+    background-image: url(images/northern-lights-g9453e253b-retouche_1920.jpg);
+    color:white;
+}
+header{
+    /*border: 1px red solid;*/
+    
+   
+    
+}
+a{
+    color:white;
+    font-size: 25px;
+}
+h1{
+margin-top: 5%;
+  text-align: center;
+  font-size: 60px;
+  
+}
+nav{
+    
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height : 7vh;
+    background: rgba(255,255,255,0.3);
+    
+}
+nav a img {
+    height: 50px;
+}
+
+main{
+    margin: 5% 10%;
+   
+}
+h2{
+    font-size:55px;
+}
+#principal{
+    margin-top: 15%;
+   /* display:flex;
+    justify-content: center;*/
+}
